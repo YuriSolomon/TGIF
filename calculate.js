@@ -46,7 +46,7 @@ function buildPage() {
             parties: statistics.firstTable
         }
     })
-    
+
     if (document.title == "House loyalty" || document.title == "Senate loyalty") {
 
         getLowestVotes();
@@ -71,7 +71,7 @@ function buildPage() {
         new Vue({
             el: '#table5',
             data: {
-                members: leastVotesMissed
+                members: hightestVotesMissed
             }
         })
     }
