@@ -29,6 +29,13 @@ function buildTable() {
             members: data.results[0].members
         }
     })
+    
+    new Vue({
+        el: 'filters',
+        data: {
+            checkedParty: []
+        }
+    })
 
     // let membersTable = document.querySelector('#myTBody');
     // let allMembers = data.results[0].members;
