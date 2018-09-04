@@ -40,6 +40,13 @@ function buildPage() {
     countMV();
     // buildTable1();
 
+    new Vue({
+        el: '#table1',
+        data: {
+            parties: statistics.firstTable
+        }
+    })
+    
     if (document.title == "House loyalty" || document.title == "Senate loyalty") {
 
         getLowestVotes();
@@ -51,10 +58,22 @@ function buildPage() {
     } else if (document.title == "House attendance" || document.title == "Senate attendance") {
 
         getMostMissed();
-        buildTable5();
 
         getLeastMissed();
-        buildTable4();
+
+        new Vue({
+            el: '#table4',
+            data: {
+                members: leastVotesMissed
+            }
+        })
+
+        new Vue({
+            el: '#table5',
+            data: {
+                members: leastVotesMissed
+            }
+        })
     }
 }
 
@@ -94,12 +113,7 @@ function countMV() {
     }
 }
 
-new Vue({
-    el: '#app',
-    data: {
-        parties: statistics.firstTable
-    }
-})
+
 
 //option to build a table without Vue
 // function buildTable1() {
@@ -199,22 +213,23 @@ function getMostMissed() {
     hightestVotesMissed.sort((fst, snd) => fst.missed_votes_pct - snd.missed_votes_pct);
 }
 
-function buildTable5() {
-    let mostMissedVotes = document.querySelector('#myTBody5');
+// function buildTable5() {
+//     let mostMissedVotes = document.querySelector('#myTBody5');
 
-    hightestVotesMissed.forEach(member => {
+//     hightestVotesMissed.forEach(member => {
 
-        let newRow = document.createElement('tr');
-        let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
-        newRow.insertCell().innerHTML = fullName;
-        newRow.insertCell().innerHTML = member.missed_votes;
-        newRow.insertCell().innerHTML = member.missed_votes_pct;
+//         let newRow = document.createElement('tr');
+//         let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
+//         newRow.insertCell().innerHTML = fullName;
+//         newRow.insertCell().innerHTML = member.missed_votes;
+//         newRow.insertCell().innerHTML = member.missed_votes_pct;
 
-        mostMissedVotes.append(newRow);
-    });
-}
+//         mostMissedVotes.append(newRow);
+//     });
+// }
 
 //least missed votes
+
 function getLeastMissed() {
 
     var totalMembers = statistics.firstTable[3].numberOfMembers;
@@ -230,17 +245,19 @@ function getLeastMissed() {
     leastVotesMissed.sort((fst, snd) => snd.missed_votes_pct - fst.missed_votes_pct);
 }
 
-function buildTable4() {
-    let leastMissedVotes = document.querySelector('#myTBody4');
 
-    leastVotesMissed.forEach(member => {
 
-        let newRow = document.createElement('tr');
-        let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
-        newRow.insertCell().innerHTML = fullName;
-        newRow.insertCell().innerHTML = member.missed_votes;
-        newRow.insertCell().innerHTML = member.missed_votes_pct;
+// function buildTable4() {
+//     let leastMissedVotes = document.querySelector('#myTBody4');
 
-        leastMissedVotes.append(newRow);
-    });
-}
+//     leastVotesMissed.forEach(member => {
+
+//         let newRow = document.createElement('tr');
+//         let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
+//         newRow.insertCell().innerHTML = fullName;
+//         newRow.insertCell().innerHTML = member.missed_votes;
+//         newRow.insertCell().innerHTML = member.missed_votes_pct;
+
+//         leastMissedVotes.append(newRow);
+//     });
+// }
