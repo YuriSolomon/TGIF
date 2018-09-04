@@ -50,10 +50,22 @@ function buildPage() {
     if (document.title == "House loyalty" || document.title == "Senate loyalty") {
 
         getLowestVotes();
-        buildTable2();
 
         getHightestVotes();
-        buildTable3();
+
+        new Vue({
+            el: '#table2',
+            data: {
+                members: lowestVotes
+            }
+        })
+
+        new Vue({
+            el: '#table3',
+            data: {
+                members: hightestVotes
+            }
+        })
 
     } else if (document.title == "House attendance" || document.title == "Senate attendance") {
 
@@ -113,25 +125,6 @@ function countMV() {
     }
 }
 
-
-
-//option to build a table without Vue
-// function buildTable1() {
-
-//     let avarageTable = document.querySelector('#myTBody1');
-
-//     statistics.firstTable.forEach(party => {
-
-//         let newRow = document.createElement('tr');
-//         newRow.insertCell().innerHTML = party.title;
-//         newRow.insertCell().innerHTML = party.numberOfMembers;
-//         newRow.insertCell().innerHTML = party.avarageVotes;
-
-//         avarageTable.append(newRow);
-//     });
-
-// }
-
 //lowest votes
 function getLowestVotes() {
 
@@ -146,23 +139,6 @@ function getLowestVotes() {
     lowestVotes = members.filter(elementOfMyArray => (elementOfMyArray.votes_with_party_pct <= lowestVotesWithParty));
 
     lowestVotes.sort((fst, snd) => fst.votes_with_party_pct - snd.votes_with_party_pct);
-}
-
-function buildTable2() {
-    let leastEngaged = document.querySelector('#myTBody2');
-
-    lowestVotes.forEach(member => {
-
-        let partyVotes = (member.total_votes - member.missed_votes) * member.votes_with_party_pct / 100;
-        partyVotes = partyVotes.toFixed(0);
-        let newRow = document.createElement('tr');
-        let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
-        newRow.insertCell().innerHTML = fullName;
-        newRow.insertCell().innerHTML = partyVotes;
-        newRow.insertCell().innerHTML = member.votes_with_party_pct;
-
-        leastEngaged.append(newRow);
-    });
 }
 
 //hightest votes
@@ -181,22 +157,6 @@ function getHightestVotes() {
     hightestVotes.sort((fst, snd) => snd.votes_with_party_pct - fst.votes_with_party_pct);
 }
 
-function buildTable3() {
-    let leastEngaged = document.querySelector('#myTBody3');
-
-    hightestVotes.forEach(member => {
-
-        let partyVotes = (member.total_votes - member.missed_votes) * member.votes_with_party_pct / 100;
-        partyVotes = partyVotes.toFixed(0);
-        let newRow = document.createElement('tr');
-        let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
-        newRow.insertCell().innerHTML = fullName;
-        newRow.insertCell().innerHTML = partyVotes;
-        newRow.insertCell().innerHTML = member.votes_with_party_pct;
-
-        leastEngaged.append(newRow);
-    });
-}
 //most missed votes
 function getMostMissed() {
 
@@ -213,23 +173,7 @@ function getMostMissed() {
     hightestVotesMissed.sort((fst, snd) => fst.missed_votes_pct - snd.missed_votes_pct);
 }
 
-// function buildTable5() {
-//     let mostMissedVotes = document.querySelector('#myTBody5');
-
-//     hightestVotesMissed.forEach(member => {
-
-//         let newRow = document.createElement('tr');
-//         let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
-//         newRow.insertCell().innerHTML = fullName;
-//         newRow.insertCell().innerHTML = member.missed_votes;
-//         newRow.insertCell().innerHTML = member.missed_votes_pct;
-
-//         mostMissedVotes.append(newRow);
-//     });
-// }
-
 //least missed votes
-
 function getLeastMissed() {
 
     var totalMembers = statistics.firstTable[3].numberOfMembers;
@@ -245,19 +189,19 @@ function getLeastMissed() {
     leastVotesMissed.sort((fst, snd) => snd.missed_votes_pct - fst.missed_votes_pct);
 }
 
+//option to build a table without Vue
+// function buildTable1() {
 
+//     let avarageTable = document.querySelector('#myTBody1');
 
-// function buildTable4() {
-//     let leastMissedVotes = document.querySelector('#myTBody4');
-
-//     leastVotesMissed.forEach(member => {
+//     statistics.firstTable.forEach(party => {
 
 //         let newRow = document.createElement('tr');
-//         let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
-//         newRow.insertCell().innerHTML = fullName;
-//         newRow.insertCell().innerHTML = member.missed_votes;
-//         newRow.insertCell().innerHTML = member.missed_votes_pct;
+//         newRow.insertCell().innerHTML = party.title;
+//         newRow.insertCell().innerHTML = party.numberOfMembers;
+//         newRow.insertCell().innerHTML = party.avarageVotes;
 
-//         leastMissedVotes.append(newRow);
+//         avarageTable.append(newRow);
 //     });
+
 // }
