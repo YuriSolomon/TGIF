@@ -38,7 +38,7 @@ buildPage();
 function buildPage() {
 
     countMV();
-    buildTable1();
+    // buildTable1();
 
     if (document.title == "House loyalty" || document.title == "Senate loyalty") {
 
@@ -94,22 +94,29 @@ function countMV() {
     }
 }
 
-//Table
-function buildTable1() {
+new Vue({
+    el: '#app',
+    data: {
+        parties: statistics.firstTable
+    }
+})
 
-    let avarageTable = document.querySelector('#myTBody1');
+//option to build a table without Vue
+// function buildTable1() {
 
-    statistics.firstTable.forEach(party => {
+//     let avarageTable = document.querySelector('#myTBody1');
 
-        let newRow = document.createElement('tr');
-        newRow.insertCell().innerHTML = party.title;
-        newRow.insertCell().innerHTML = party.numberOfMembers;
-        newRow.insertCell().innerHTML = party.avarageVotes;
+//     statistics.firstTable.forEach(party => {
 
-        avarageTable.append(newRow);
-    });
+//         let newRow = document.createElement('tr');
+//         newRow.insertCell().innerHTML = party.title;
+//         newRow.insertCell().innerHTML = party.numberOfMembers;
+//         newRow.insertCell().innerHTML = party.avarageVotes;
 
-}
+//         avarageTable.append(newRow);
+//     });
+
+// }
 
 //lowest votes
 function getLowestVotes() {
