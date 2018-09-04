@@ -31,9 +31,29 @@ var statistics = {
 
 };
 
-var members = data.results[0].members;
+var data;
+var members;
 
-buildPage();
+onload = (function () {
+    if (document.title == "House loyalty" || document.title == "House attendance") {
+        var url = "https://api.propublica.org/congress/v1/113/house/members.json";
+    } else if (document.title == "Senate loyalty" || document.title == "Senate attendance") {
+        var url = "https://api.propublica.org/congress/v1/113/senate/members.json";
+    }
+    fetch(url, {
+            headers: new Headers({
+                'X-API-Key': 'TWbDXA3ZpPEHTr8hvMEgBRwGn9IoZyHLbD4V0lwD'
+            })
+        })
+        .then(response => response.json())
+        .then(realData => {
+
+            data = realData;
+            members = data.results[0].members;
+
+            buildPage();
+        })
+})
 
 function buildPage() {
 
