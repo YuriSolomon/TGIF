@@ -139,7 +139,6 @@
 
             <br>
             <span>party: {{part}}</span> <br>
-            <span>checked party: {{checkedParty}}</span>
 
             <!-- table -->
             <table class="table" id="house-data" style="width: 80%">
@@ -152,7 +151,7 @@
                     <td>Percentage of votes</td>
                 </tr>
                 <tbody id="myTBody">
-                    <tr v-for="(member, index) in members">
+                    <tr v-for="(member, index) in checkedParty">
                         <td>{{index + 1}}</td>
                         <td><a href='member.url'>{{member.first_name + " " + (member.middle_name || "") + " " +
                                 member.last_name}}</a></td>

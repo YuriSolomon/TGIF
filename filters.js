@@ -26,14 +26,18 @@ function buildTable() {
         el: '#filters',
         data: {
             part: [],
-            checkedParty: [],
+            checkedParty: members,
             members: members
         },
         methods: {
             myFilter() {
 
                 Vue.nextTick(function () {
-                    this.checkedParty = this.members.filter(partyMembers => this.part.includes(partyMembers.party));
+                    if (this.part.length == 0) {
+                        this.checkedParty = this.members;
+                    } else {
+                        this.checkedParty = this.members.filter(partyMembers => this.part.includes(partyMembers.party));
+                    }
                 }.bind(this))
             }
         }
