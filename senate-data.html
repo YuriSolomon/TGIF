@@ -75,13 +75,11 @@
     <div id="filters">
 
       Republicans:
-      <!-- A way to replace lines 38-39 in js file with one methode in HTML -->
-      <!-- <input type="checkbox" name="party" value="R" id="partyR" onclick="buildTable()"> -->
-      <input type="checkbox" name="party" value="R" id="partyR">
+      <input type="checkbox" v-model="part" value="R" id="partyR" v-on:click="myFilter">
       Independants:
-      <input type="checkbox" name="party" value="I" id="partyI">
+      <input type="checkbox" v-model="part" value="I" id="partyI" v-on:click="myFilter">
       Democrats:
-      <input type="checkbox" name="party" value="D" id="partyD">
+      <input type="checkbox" v-model="part" value="D" id="partyD" v-on:click="myFilter">
 
       State:
       <select name="state" id="stateSelect">
@@ -139,10 +137,8 @@
         <option value="WY">Wyoming</option>
       </select>
 
-    </div>
-
-    <div id="table">
-      <table class="table" id="senate-data" style="width: 80%">
+      <!-- table -->
+      <table class="table" id="house-data" style="width: 80%">
         <tr>
           <td>Number</td>
           <td>Full name</td>
@@ -152,14 +148,15 @@
           <td>Percentage of votes</td>
         </tr>
         <tbody id="myTBody">
-          <tr v-for="member in members">
+          <tr v-for="(member, index) in checkedParty">
+            <td>{{index + 1}}</td>
             <td><a href='member.url'>{{member.first_name + " " + (member.middle_name || "") + " " +
                 member.last_name}}</a></td>
             <td>{{member.party}}</td>
             <td>{{member.state}}</td>
             <td>{{member.seniority}}</td>
             <td>{{member.votes_with_party_pct}}</td>
-
+          </tr>
         </tbody>
       </table>
     </div>
