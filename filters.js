@@ -20,47 +20,29 @@ onload = (function () {
 })
 
 
-
 function buildTable() {
 
-    new Vue({
-        el: '#table',
+    let app = new Vue({
+        el: '#filters',
         data: {
-            members: data.results[0].members
+            part: [],
+            checkedParty: [],
+            members: members
+        },
+        methods: {
+            myFilter() {
+
+                Vue.nextTick(function () {
+                    this.checkedParty = this.members.filter(partyMembers => this.part.includes(partyMembers.party));
+                }.bind(this))
+            }
         }
     })
-    
-    new Vue({
-        el: 'filters',
-        data: {
-            checkedParty: []
-        }
-    })
-
-    // let membersTable = document.querySelector('#myTBody');
-    // let allMembers = data.results[0].members;
-
-    // membersTable.innerHTML = '';
-    // let rowNo = 1;
-
-    // allMembers.forEach(member => {
-
-    //     if (showMember(member)) {
-    //         let newRow = document.createElement('tr');
-    //         let fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
-    //         let nameLink = '<a href=' + member.url + '>' + fullName + '</a>';
-    //         newRow.insertCell().innerHTML = rowNo;
-    //         rowNo++;
-    //         newRow.insertCell().innerHTML = nameLink;
-    //         newRow.insertCell().innerHTML = member.party;
-    //         newRow.insertCell().innerHTML = member.state;
-    //         newRow.insertCell().innerHTML = member.seniority;
-    //         newRow.insertCell().innerHTML = member.votes_with_party_pct + "%";
-
-    //         membersTable.append(newRow);
-    //     }
-    // });
 }
+
+
+
+
 
 // function showMember(oneMember) {
 
