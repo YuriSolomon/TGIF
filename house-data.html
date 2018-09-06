@@ -101,7 +101,7 @@
                 <tbody id="myTBody">
                     <tr v-for="(member, index) in state">
                         <td>{{index + 1}}</td>
-                        <td><a href='member.url'>{{member.first_name + " " + (member.middle_name || "") + " " +
+                        <td><a v-bind:href="member.url">{{member.first_name + " " + (member.middle_name || "") + " " +
                                 member.last_name}}</a></td>
                         <td>{{member.party}}</td>
                         <td>{{member.state}}</td>
