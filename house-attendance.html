@@ -65,86 +65,93 @@
     <!-- <script src="pro-congress-113-house.js"></script> -->
 
     <!--Table container-->
-    <div class="row">
-        <div class="col">
-            <h2>Attendance</h2>
-            <p>The Constitution specifies that a majority of members constitutes a quorum to do business in each house.
-                Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus, in
-                most
-                cases, debates continue even if a majority is not present.</p>
+    <div id="pageContent">
+        <div class="row">
+            <div class="col">
+                <h2>Attendance</h2>
+                <p>The Constitution specifies that a majority of members constitutes a quorum to do business in each
+                    house.
+                    Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus,
+                    in
+                    most
+                    cases, debates continue even if a majority is not present.</p>
 
-            <p>The Senate uses roll-call votes; a clerk calls out the names of all the senators, each senator stating
-                "aye"
-                or "no" when his or her name is announced. The House reserves roll-call votes for the most formal
-                matters,
-                as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic
-                device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if
-                present) cast the tiebreaking vote.</p>
+                <p>The Senate uses roll-call votes; a clerk calls out the names of all the senators, each senator
+                    stating
+                    "aye"
+                    or "no" when his or her name is announced. The House reserves roll-call votes for the most formal
+                    matters,
+                    as a roll-call of all 435 representatives takes quite some time; normally, members vote by
+                    electronic
+                    device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may
+                    (if
+                    present) cast the tiebreaking vote.</p>
 
+            </div>
+            <div class="col">
+                <h2>House at a glance</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Party</th>
+                            <th>Number of Reps</th>
+                            <th>% Voted with Party</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTBody1">
+                        <tr v-for="member in parties">
+                            <td>{{member.title}}</td>
+                            <td>{{member.numberOfMembers}}</td>
+                            <td>{{member.avarageVotes}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div id="table1" class="col">
-            <h2>House at a glance</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Party</th>
-                        <th>Number of Reps</th>
-                        <th>% Voted with Party</th>
-                    </tr>
-                </thead>
-                <tbody id="myTBody1">
-                    <tr v-for="member in parties">
-                        <td>{{member.title}}</td>
-                        <td>{{member.numberOfMembers}}</td>
-                        <td>{{member.avarageVotes}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col">
+                <h2>Least Engaged (Bottom 10% Attendance)</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Number of Missed Votes</th>
+                            <th>% Missed</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTBody4">
+                        <tr v-for="member in least">
+                            <td>{{member.first_name + " " + (member.middle_name || "") + " " + member.last_name}}</td>
+                            <td>{{member.missed_votes}}</td>
+                            <td>{{member.missed_votes_pct}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <h2>Most Engaged (Top 10% Attendance)</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Number of Missed Votes</th>
+                            <th>% Missed</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTBody5">
+                        <tr v-for="member in most">
+                            <td>{{member.first_name + " " + (member.middle_name || "") + " " + member.last_name}}</td>
+                            <td>{{member.missed_votes}}</td>
+                            <td>{{member.missed_votes_pct}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div id="table4" class="col">
-            <h2>Least Engaged (Bottom 10% Attendance)</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Number of Missed Votes</th>
-                        <th>% Missed</th>
-                    </tr>
-                </thead>
-                <tbody id="myTBody4">
-                    <tr v-for="member in members">
-                        <td>{{member.first_name + " " + (member.middle_name || "") + " " + member.last_name}}</td>
-                        <td>{{member.missed_votes}}</td>
-                        <td>{{member.missed_votes_pct}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="table5" class="col">
-            <h2>Most Engaged (Top 10% Attendance)</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Number of Missed Votes</th>
-                        <th>% Missed</th>
-                    </tr>
-                </thead>
-                <tbody id="myTBody5">
-                    <tr v-for="member in members">
-                        <td>{{member.first_name + " " + (member.middle_name || "") + " " + member.last_name}}</td>
-                        <td>{{member.missed_votes}}</td>
-                        <td>{{member.missed_votes_pct}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-footer text-muted">
-            © 2016 TGIF | All Rights Reserved
+        <div class="card text-center">
+            <div class="card-footer text-muted">
+                © 2016 TGIF | All Rights Reserved
+            </div>
         </div>
     </div>
     <script src="calculate.js"></script>

@@ -58,55 +58,21 @@ onload = (function () {
 function buildPage() {
 
     countMV();
-    // buildTable1();
+    getLowestVotes();
+    getHightestVotes();
+    getMostMissed();
+    getLeastMissed();
 
     new Vue({
-        el: '#table1',
+        el: '#pageContent',
         data: {
-            parties: statistics.firstTable
+            parties: statistics.firstTable,
+            lowest: lowestVotes,
+            hightest: hightestVotes,
+            least: leastVotesMissed,
+            most: mostVotesMissed
         }
     })
-
-    if (document.title == "House loyalty" || document.title == "Senate loyalty") {
-
-        getLowestVotes();
-
-        getHightestVotes();
-
-        new Vue({
-            el: '#table2',
-            data: {
-                members: lowestVotes
-            }
-        })
-
-        new Vue({
-            el: '#table3',
-            data: {
-                members: hightestVotes
-            }
-        })
-
-    } else if (document.title == "House attendance" || document.title == "Senate attendance") {
-
-        getMostMissed();
-
-        getLeastMissed();
-
-        new Vue({
-            el: '#table4',
-            data: {
-                members: leastVotesMissed
-            }
-        })
-
-        new Vue({
-            el: '#table5',
-            data: {
-                members: hightestVotesMissed
-            }
-        })
-    }
 }
 
 //CALCULATIONS
@@ -188,9 +154,9 @@ function getMostMissed() {
     members.sort((fst, snd) => fst.missed_votes_pct - snd.missed_votes_pct);
 
     var mostMissed = members[checked - 1].missed_votes_pct;
-    hightestVotesMissed = members.filter(elementOfMyArray => (elementOfMyArray.missed_votes_pct <= mostMissed));
+    mostVotesMissed = members.filter(elementOfMyArray => (elementOfMyArray.missed_votes_pct <= mostMissed));
 
-    hightestVotesMissed.sort((fst, snd) => fst.missed_votes_pct - snd.missed_votes_pct);
+    mostVotesMissed.sort((fst, snd) => fst.missed_votes_pct - snd.missed_votes_pct);
 }
 
 //least missed votes
@@ -208,20 +174,3 @@ function getLeastMissed() {
 
     leastVotesMissed.sort((fst, snd) => snd.missed_votes_pct - fst.missed_votes_pct);
 }
-
-//option to build a table without Vue
-// function buildTable1() {
-
-//     let avarageTable = document.querySelector('#myTBody1');
-
-//     statistics.firstTable.forEach(party => {
-
-//         let newRow = document.createElement('tr');
-//         newRow.insertCell().innerHTML = party.title;
-//         newRow.insertCell().innerHTML = party.numberOfMembers;
-//         newRow.insertCell().innerHTML = party.avarageVotes;
-
-//         avarageTable.append(newRow);
-//     });
-
-// }
