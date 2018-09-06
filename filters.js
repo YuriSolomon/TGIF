@@ -1,34 +1,17 @@
 onload = (function () {
-    if (document.title == "House data") {
-        var url = "https://api.propublica.org/congress/v1/113/house/members.json";
-    } else if (document.title == "Senate data") {
-        var url = "https://api.propublica.org/congress/v1/113/senate/members.json";
-    }
-    fetch(url, {
-            headers: new Headers({
-                'X-API-Key': 'TWbDXA3ZpPEHTr8hvMEgBRwGn9IoZyHLbD4V0lwD'
-            })
-        })
-        .then(response => response.json())
-        .then(realData => {
-
-            data = realData;
-            members = data.results[0].members;
-
-            buildTable();
-        })
+    buildTable();
 })
-
 
 function buildTable() {
 
     let app = new Vue({
-        el: '#filters',
+        el: '#pageContent',
         data: {
+            loading: true,
             part: [],
-            checkedParty: members,
-            state: members,
-            members: members,
+            checkedParty: [],
+            state: [],
+            members: [],
             selected: "all",
             options: [{
                     value: "all",
@@ -239,6 +222,30 @@ function buildTable() {
                     text: "Wyoming"
                 }
             ]
+        },
+        beforeCreate() {
+            if (document.title == "House data") {
+                var url = "https://api.propublica.org/congress/v1/113/house/members.json";
+            } else if (document.title == "Senate data") {
+                var url = "https://api.propublica.org/congress/v1/113/senate/members.json";
+            }
+            fetch(url, {
+                    headers: new Headers({
+                        'X-API-Key': 'TWbDXA3ZpPEHTr8hvMEgBRwGn9IoZyHLbD4V0lwD'
+                    })
+                })
+                .then(response => response.json())
+                .then(realData => {
+
+                    data = realData;
+                    eachMember = data.results[0].members;
+
+                    this.checkedParty = eachMember;
+                    this.state = eachMember;
+                    this.members = eachMember;
+
+                    this.loading = false;
+                })
         },
         methods: {
             myFilter() {

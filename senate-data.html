@@ -13,7 +13,7 @@
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -63,91 +63,74 @@
   </nav>
 
   <!--Table container-->
-  <div>
-    <h2>Senators</h2>
-    <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S.
-      Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year
-      terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a
-      precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal
-      judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other
-      federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
-
-    <div id="filters">
-
-      Republicans:
-      <input type="checkbox" v-model="part" value="R" id="partyR" v-on:click="myFilter">
-      Independants:
-      <input type="checkbox" v-model="part" value="I" id="partyI" v-on:click="myFilter">
-      Democrats:
-      <input type="checkbox" v-model="part" value="D" id="partyD" v-on:click="myFilter">
-
-      State:
-            <select name="state" id="stateSelect" v-model="selected" v-on:change="myFilter">
-                <option v-for="option in options" v-bind:value="option.value">
-                    {{ option.text }}
-                </option>
-            </select>
-
-      <!-- table -->
-      <table class="table" id="house-data" style="width: 80%">
-        <tr>
-          <td>Number</td>
-          <td>Full name</td>
-          <td>Party</td>
-          <td>State</td>
-          <td>Seniority</td>
-          <td>Percentage of votes</td>
-        </tr>
-        <tbody id="myTBody">
-          <tr v-for="(member, index) in state">
-            <td>{{index + 1}}</td>
-            <td><a v-bind:href="member.url">{{member.first_name + " " + (member.middle_name || "") + " " +
-                member.last_name}}</a></td>
-            <td>{{member.party}}</td>
-            <td>{{member.state}}</td>
-            <td>{{member.seniority}}</td>
-            <td>{{member.votes_with_party_pct}}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div id="pageContent">
+    <div class="loader" v-if="loading" style="text-align:center;">
+      <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
+    <div v-else>
+      <h2>Senators</h2>
+      <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S.
+        Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year
+        terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a
+        precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal
+        judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other
+        federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
 
-    <!-- <script src="pro-congress-113-senate.js"></script> -->
+      <div id="filters">
 
-    <!-- <script>
-      for (var i=0; i < data.results[0].members.length ; i++) {
-        var member = data.results[0].members[i];
-        var newRow = document.createElement("tr");
-        var fullName = member.first_name + " " + (member.middle_name || "") + " " + member.last_name;
-        //when using '||' it means that if value = null, the code will print whatever inside the quotes, if the quotes are empty the code will print nothing.
-        var nameLink = '<a href=' + member.url + '>' + fullName + '</a>';
-        newRow.insertCell().innerHTML = i+1;
-        newRow.insertCell().innerHTML = nameLink;
-        newRow.insertCell().innerHTML = member.party;
-        newRow.insertCell().innerHTML = member.state;
-        newRow.insertCell().innerHTML = member.seniority;
-        newRow.insertCell().innerHTML = member.votes_with_party_pct + "%";
-          
-        document.getElementById("senate-data").append(newRow);
-              
-        //another way is to actually write the commends:
-        /*
-        document.write("<tr>");
-        if (data.results[0].members[i].middle_name == null) {
-          document.write("<td>"+(data.results[0].members[i].first_name + " "+ data.results[0].members[i].last_name)+" </td>");
-        } else {
-          document.write("<td>"+(data.results[0].members[i].first_name + " " + data.results[0].members[i].middle_name +" "+ data.results[0].members[i].last_name)+" </td>");
-        }
-        document.write("<td>"+(data.results[0].members[i].party)+" </td>");
-        document.write("<td>"+(data.results[0].members[i].state)+" </td>");
-        document.write("<td>"+(data.results[0].members[i].seniority)+" </td>");
-        document.write("<td>"+(data.results[0].members[i].votes_with_party_pct + "%")+" </td>");
-        document.write("</tr><br>");
-        */
-      }
-    </script> -->
-    <script src="filters.js"></script>
+        Republicans:
+        <input type="checkbox" v-model="part" value="R" id="partyR" v-on:click="myFilter">
+        Independants:
+        <input type="checkbox" v-model="part" value="I" id="partyI" v-on:click="myFilter">
+        Democrats:
+        <input type="checkbox" v-model="part" value="D" id="partyD" v-on:click="myFilter">
+
+        State:
+        <select name="state" id="stateSelect" v-model="selected" v-on:change="myFilter">
+          <option v-for="option in options" v-bind:value="option.value">
+            {{ option.text }}
+          </option>
+        </select>
+
+        <!-- table -->
+        <table class="table" id="house-data" style="width: 80%">
+          <tr>
+            <td>Number</td>
+            <td>Full name</td>
+            <td>Party</td>
+            <td>State</td>
+            <td>Seniority</td>
+            <td>Percentage of votes</td>
+          </tr>
+          <tbody id="myTBody">
+            <tr v-for="(member, index) in state">
+              <td>{{index + 1}}</td>
+              <td><a v-bind:href="member.url">{{member.first_name}} {{member.middle_name || ""}} {{member.last_name}}</a></td>
+              <td>{{member.party}}</td>
+              <td>{{member.state}}</td>
+              <td>{{member.seniority}}</td>
+              <td>{{member.votes_with_party_pct}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+  <script src="filters.js"></script>
   <div class="card text-center">
     <div class="card-footer text-muted">
       © 2016 TGIF | All Rights Reserved

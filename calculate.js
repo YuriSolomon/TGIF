@@ -31,9 +31,6 @@ var statistics = {
 
 };
 
-// var data;
-// var members;
-
 onload = (function () {
     buildPage();
 })
@@ -128,10 +125,8 @@ function buildPage() {
 
                     if (direction == "lowest") {
                         this.lowest = members.filter(elementOfMyArray => (elementOfMyArray.votes_with_party_pct <= votesWithParty));
-                        // lowestVotes.sort((fst, snd) => fst.votes_with_party_pct - snd.votes_with_party_pct);
                     } else if (direction == "highest") {
                         this.highest = members.filter(elementOfMyArray => (elementOfMyArray.votes_with_party_pct >= votesWithParty));
-                        // highestVotes.sort((fst, snd) => snd.votes_with_party_pct - fst.votes_with_party_pct);
                     }
 
                 } else if (direction == "least" || direction == "most") {
