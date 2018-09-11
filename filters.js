@@ -221,7 +221,7 @@ function buildTable() {
                     value: "WY",
                     text: "Wyoming"
                 }
-            ]
+            ],
         },
         beforeCreate() {
             if (document.title == "House data") {
